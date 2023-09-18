@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import "reset";
+@import "variables";
+@import "mixins";
+
+body {
+  font-family: $font-family;
+}
+
+//BREAKPOINTS
+
+$breakpoint-sm: "sm";
+$breakpoint-md: "md";
+$breakpoint-lg: "lg";
