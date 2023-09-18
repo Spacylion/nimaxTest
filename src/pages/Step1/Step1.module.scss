@@ -1,0 +1,89 @@
+@import "../../app/lib/styles/global.scss";
+
+.step1-container {
+  margin: 0 auto;
+  max-width: 640px;
+  padding: 16px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex: 1 0 0;
+  align-self: stretch;
+
+  .step1-title {
+    color: $mainColor; // Use the defined color variable
+    font-family: $fontFamily; // Use the defined font-family variable
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 32px;
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid $mainColor; // Use the defined color variable
+  }
+
+  .step1-content {
+    display: flex;
+    padding: 10px 0px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex: 1 0 0;
+    align-self: stretch;
+
+    .step1-form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      align-self: stretch;
+
+      .step1-label {
+        display: flex;
+        height: 32px;
+        align-items: center;
+        gap: 10px;
+        flex: 1 0 0;
+      }
+
+      .step1-input-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        flex: 1 0 0;
+      }
+    }
+
+    .total-cost {
+      font-weight: 600;
+      font-size: 16px;
+      color: $mainColor; // Use the defined color variable
+      margin-top: 10px;
+    }
+
+    .step1-button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      align-self: stretch;
+
+      .next-button {
+        background: #3b82f6;
+        color: #fff;
+        font-family: Inter, sans-serif; // Use the defined font-family variable
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        width: 128px;
+        padding: 10px 14px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        border-radius: 4px;
+      }
+    }
+  }
+}

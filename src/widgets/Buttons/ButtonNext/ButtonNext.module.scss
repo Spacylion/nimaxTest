@@ -1,0 +1,36 @@
+// Button styles
+.button {
+  display: inline-flex;
+  padding: 10px 14px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 4px;
+  background: $blueColor;
+  color: $whiteColor;
+  border: none;
+  cursor: pointer;
+
+  &:disabled {
+    background: $disabledColor;
+    cursor: not-allowed;
+  }
+
+  &:focus {
+    width: 83px;
+    height: 43px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    border: 2px solid $blueColor;
+  }
+
+  &:hover {
+    background: $hoveredColor;
+    display: inline-flex;
+    padding: 10px 14px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 4px;
+  }
+}

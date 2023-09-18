@@ -1,10 +1,11 @@
+import { Step1, Step2, Step3 } from "../pages"
+
 function App() {
   return (
     <>
-      <div className='step1-container'>
-        <h1 className='step-title'>Бронирование номера</h1>
-        <div className='step-content'>{/* Your form elements here */}</div>
-      </div>
+      <Step1 />
+      <Step2 />
+      <Step3 />
     </>
   )
 }
