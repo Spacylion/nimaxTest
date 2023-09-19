@@ -44,4 +44,70 @@ body {
   align-items: center;
   height: 100vh;
   width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+@mixin button-base {
+  display: flex;
+  width: 128px;
+  height: 44px;
+  padding: 10px 14px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid $blueColor;
+  border-radius: 4px;
+  background: $blueColor;
+  color: $whiteColor;
+  font-family: $fontFamily;
+  font-size: $fontSize;
+  font-weight: 500;
+  line-height: normal;
+  position: relative;
+  transition: width 0.2s ease, height 0.2s ease;
+
+  &:hover {
+    background: $hoveredColor;
+    cursor: pointer;
+  }
+  &:focus {
+    border: 3px double $whiteColor;
+  }
+  &:disabled {
+    background: $disabledColor;
+    cursor: not-allowed;
+  }
+}
+
+// Define additional button styles with different colors and borders
+@mixin button-secondary {
+  @include button-base;
+  background: $secondaryColor;
+  color: $whiteColor;
+
+  &:hover {
+    background: $secondaryHoverColor;
+  }
+}
+
+@mixin button-success {
+  @include button-base;
+  background: $successColor;
+  color: $whiteColor;
+
+  &:hover {
+    background: $successHoverColor;
+  }
+}
+
+@mixin button-danger {
+  @include button-base;
+  background: $dangerColor;
+  color: $whiteColor;
+
+  &:hover {
+    background: $dangerHoverColor;
+  }
 }

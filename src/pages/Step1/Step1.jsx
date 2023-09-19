@@ -1,5 +1,7 @@
 import { useState } from "react"
-import styles from "./Step1.module.scss" // Import the SCSS module
+import styles from "./Step1.module.scss"
+import ToggleOn from "../../app/assets/images/ToggleOn.svg"
+import ToggleOff from "../../app/assets/images/ToggleOff.svg"
 
 const Step1 = () => {
   const [adults, setAdults] = useState(1)
@@ -7,7 +9,6 @@ const Step1 = () => {
   const [baby, setBaby] = useState(0)
   const [nights, setNights] = useState(0)
   const [insurance, setInsurance] = useState(true)
-
   const [roomType, setRoomType] = useState("Эконом")
 
   const handleRoomTypeChange = (e) => {
@@ -77,39 +78,63 @@ const Step1 = () => {
                 <p className={styles.page__form__text}>Тип номера</p>
               </div>
               <div className={styles.page__form__row__child__2}>
-                <div className={styles.page__form__row__child__2__radiobutton}>
-                  <input
-                    className={styles.input__radio}
-                    type='radio'
-                    name='roomType'
-                    value='Эконом'
-                    checked={roomType === "Эконом"}
-                    onChange={handleRoomTypeChange}
-                  />
-                  <p className={styles.page__form__text}>Эконом</p>
-                </div>
-                <div className={styles.page__form__row__child__2__radiobutton}>
-                  <input
-                    className={styles.input__radio}
-                    type='radio'
-                    name='roomType'
-                    value='Стандарт'
-                    checked={roomType === "Стандарт"}
-                    onChange={handleRoomTypeChange}
-                  />
-                  <p className={styles.page__form__text}>Стандарт</p>
-                </div>
-                <div className={styles.page__form__row__child__2__radiobutton}>
-                  <input
-                    className={styles.input__radio}
-                    type='radio'
-                    name='roomType'
-                    value='Люкс'
-                    checked={roomType === "Люкс"}
-                    onChange={handleRoomTypeChange}
-                  />
-                  <p className={styles.page__form__text}>Люкс</p>
-                </div>
+                {window.innerWidth <= 320 ? (
+                  <div className={styles.page__form__row__child__2__dropdown}>
+                    <select
+                      value={roomType}
+                      onChange={handleRoomTypeChange}
+                      className={styles.input}
+                    >
+                      <option value='Эконом'>Эконом</option>
+                      <option value='Стандарт'>Стандарт</option>
+                      <option value='Люкс'>Люкс</option>
+                    </select>
+                  </div>
+                ) : (
+                  <>
+                    <div
+                      className={styles.page__form__row__child__2__radiobutton}
+                    >
+                      <input
+                        className={styles.input__radio}
+                        type='radio'
+                        name='roomType'
+                        value='Эконом'
+                        checked={roomType === "Эконом"}
+                        onChange={handleRoomTypeChange}
+                      />
+                      <label className={styles.page__form__text}>Эконом</label>
+                    </div>
+                    <div
+                      className={styles.page__form__row__child__2__radiobutton}
+                    >
+                      <input
+                        className={styles.input__radio}
+                        type='radio'
+                        name='roomType'
+                        value='Стандарт'
+                        checked={roomType === "Стандарт"}
+                        onChange={handleRoomTypeChange}
+                      />
+                      <label className={styles.page__form__text}>
+                        Стандарт
+                      </label>
+                    </div>
+                    <div
+                      className={styles.page__form__row__child__2__radiobutton}
+                    >
+                      <input
+                        className={styles.input__radio}
+                        type='radio'
+                        name='roomType'
+                        value='Люкс'
+                        checked={roomType === "Люкс"}
+                        onChange={handleRoomTypeChange}
+                      />
+                      <label className={styles.page__form__text}>Люкс</label>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 
@@ -127,21 +152,36 @@ const Step1 = () => {
               </div>
             </div>
 
-            <div className={styles.page__form__row}>
+            <div className={`${styles.page__form__row} ${styles.mobileFlex}`}>
               <div className={styles.page__form__row__child__1}>
-                <p className={styles.step1Label}>Страховка</p>
+                <p className={styles.page__form__text}>Страховка</p>
               </div>
               <div className={styles.page__form__row__child__2}>
-                <input
-                  className={styles.checkbox}
-                  type='checkbox'
-                  checked={insurance}
-                  onChange={(e) => setInsurance(e.target.checked)}
-                />
+                <div className={styles.toggleContainer}>
+                  {window.innerWidth <= 320 ? (
+                    <>
+                      <img
+                        src={insurance ? ToggleOff : ToggleOn}
+                        alt={insurance ? "Toggle Off" : "Toggle On"}
+                        onClick={() => setInsurance(!insurance)}
+                        className={styles.toggleIcon}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <input
+                        type='checkbox'
+                        checked={insurance}
+                        onChange={() => setInsurance(!insurance)}
+                        className={styles.toggleCheckbox}
+                      />
+                    </>
+                  )}
+                </div>
               </div>
             </div>
 
-            <div className={styles.page__form__row}>
+            <div className={`${styles.page__form__row} ${styles.mobileFlex}`}>
               <div className={styles.page__form__row__child__1}>
                 <p>Итого:</p>
               </div>
@@ -151,7 +191,9 @@ const Step1 = () => {
             </div>
           </div>
 
-          <div className={styles.page__main__step__wrapper__buttons}>
+          <div
+            className={`${styles.page__main__step__wrapper__buttons} ${styles.mobile__btn}`}
+          >
             <div className={styles.page__main__step__wrapper__button}>
               <button className={styles.button}>Далее</button>
             </div>

@@ -1,10 +1,10 @@
 @import "../../app/lib/styles/global.scss";
-
 .page {
   display: flex;
   flex-direction: column;
   max-width: 100%;
-  height: 100vh;
+
+  height: 100vh; /* Set height to 100vh on small screens */
   padding: 16px 20px;
   justify-content: center;
   align-items: center;
@@ -15,7 +15,8 @@
   }
   @include media-query(sm) {
     max-width: 320px;
-    padding: 10px;
+    margin: 0;
+    flex-direction: row;
   }
 
   &__main {
@@ -40,38 +41,33 @@
       align-items: flex-start;
       align-self: stretch;
 
-      &__title {
-        display: flex;
-        padding-bottom: 0px;
-        align-items: flex-start;
-        align-self: stretch;
-
-        .title {
-          color: $mainColor;
-          font-family: $fontFamily;
-          font-size: 32px;
-          font-weight: 700;
-          line-height: 32px;
-          flex: 1 0 0;
-        }
-      }
-
+      &__title,
       &__subtitle {
         display: flex;
         padding-bottom: 0px;
         align-items: flex-start;
         align-self: stretch;
 
+        .title,
         .subtitle {
           color: $mainColor;
           font-family: $fontFamily;
-          font-size: 18px;
-          font-weight: 500;
+          font-weight: 700;
           line-height: normal;
           flex: 1 0 0;
         }
+
+        .title {
+          font-size: 32px;
+        }
+
+        .subtitle {
+          font-size: 18px;
+          font-weight: 500;
+        }
       }
     }
+
     &__step__wrapper {
       display: flex;
       padding: 10px 0px;
@@ -81,32 +77,12 @@
       flex: 1 0 0;
       align-self: stretch;
 
-      @include media-query(md) {
-        padding: 10px 0px;
-      }
-      @include media-query(sm) {
-        padding: 10px 0px;
-      }
-
       &__form1 {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
         align-self: stretch;
-
-        @include media-query(md) {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 8px;
-        }
-        @include media-query(sm) {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 8px;
-        }
 
         .page__form__row {
           display: flex;
@@ -138,6 +114,7 @@
               align-items: flex-start;
               align-self: stretch;
             }
+
             .page__form__text {
               color: $mainColor;
               font-family: $fontFamily;
@@ -154,13 +131,9 @@
             gap: 10px;
             flex: 1 0 0;
 
-            @include media-query(md) {
-              flex-direction: column;
-              align-items: flex-start;
-              gap: 10px;
-            }
             @include media-query(sm) {
               align-self: stretch;
+              flex: none;
             }
 
             .input {
@@ -172,55 +145,27 @@
               border-radius: 4px;
               border: 1px solid $inputColor;
               background: $whiteColor;
-
-              @include media-query(md) {
-                padding: 7px 8px;
-                justify-content: space-between;
-                align-items: center;
-                align-self: stretch;
-              }
-              @include media-query(sm) {
-                padding: 7px 8px;
-                justify-content: space-between;
-                align-items: center;
-                align-self: stretch;
-              }
             }
 
             &__radiobutton {
               display: flex;
               align-items: center;
               gap: 6px;
-
-              @include media-query(md) {
-              }
-              @include media-query(sm) {
-              }
             }
             .page__form__text {
-              color: $mainColor; // Use the defined color variable
+              color: $mainColor;
               font-family: $fontFamily;
               font-size: $fontSize;
               font-weight: 400;
               line-height: normal;
-
-              @include media-query(md) {
-              }
-              @include media-query(sm) {
-              }
             }
 
             .input__radio {
               width: 16px;
               height: 16px;
-
-              @include media-query(md) {
-              }
-              @include media-query(sm) {
-              }
             }
             .sumnumber {
-              color: $mainColor; // Use the defined color variable
+              color: $mainColor;
               font-family: $fontFamily;
               font-size: $fontSize;
               font-weight: 600;
@@ -229,85 +174,129 @@
           }
         }
       }
-      .page__main__step__wrapper__buttons {
+    }
+  }
+  .page__main__step__wrapper__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    align-self: stretch;
+
+    @include media-query(sm) {
+      align-items: center;
+    }
+    .page__main__step__wrapper__button {
+      display: flex;
+      padding: 0px 10px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+
+      .button {
         display: flex;
-        flex-direction: column;
-        align-items: flex-end;
+        width: 128px;
+        height: 44px;
+        padding: 10px 14px;
+        justify-content: center;
+        align-items: center;
         gap: 10px;
-        align-self: stretch;
+        border-radius: 4px;
+        background: $blueColor;
+        color: $whiteColor;
+        font-family: $fontFamily;
+        font-size: $fontSize;
+        font-weight: 500;
+        line-height: normal;
+        border: none;
+        position: relative;
+        transition: width 0.2s ease, height 0.2s ease;
 
-        @include media-query(md) {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          gap: 10px;
-          align-self: stretch;
+        &:hover {
+          background: $hoveredColor;
+          cursor: pointer;
         }
-        @include media-query(sm) {
+        &:focus {
+          border: 3px double $whiteColor;
         }
-
-        .page__main__step__wrapper__button {
-          display: flex;
-          padding: 0px 10px;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 10px;
-
-          .button {
-            display: flex;
-            width: 128px;
-            height: 44px;
-            padding: 10px 14px;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            border-radius: 4px;
-            background: $blueColor;
-            color: $whiteColor;
-            font-family: $fontFamily;
-            font-size: $fontSize;
-            font-weight: 500;
-            line-height: normal;
-            border: none;
-            position: relative;
-            transition: width 0.2s ease, height 0.2s ease;
-
-            @include media-query(md) {
-              display: flex;
-              width: 128px;
-              padding: 10px 14px;
-              justify-content: center;
-              align-items: center;
-              gap: 10px;
-            }
-            @include media-query(sm) {
-              display: flex;
-              padding: 10px 14px;
-              justify-content: center;
-              align-items: center;
-              gap: 10px;
-              align-self: stretch;
-              color: $whiteColor;
-              font-family: $fontFamily;
-              font-size: $fontSize;
-              font-weight: 500;
-              line-height: normal;
-            }
-
-            &:hover {
-              background: $hoveredColor;
-              cursor: pointer;
-            }
-            &:focus {
-              border: 3px double $whiteColor;
-            }
-            &:disabled {
-              background: $disabledColor;
-              cursor: not-allowed;
-            }
-          }
+        &:disabled {
+          background: $disabledColor;
+          cursor: not-allowed;
+        }
+      }
+      @include media-query(sm) {
+        width: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .button {
+          width: 100%;
         }
       }
     }
+  }
+  .toggleContainer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .toggleIcon {
+    width: 58px;
+    height: 32px;
+    cursor: pointer;
+  }
+}
+@include media-query(sm) {
+  .page__form__row__child__2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &__dropdown {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      align-self: stretch;
+    }
+  }
+  .toggleContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  .toggleIcon {
+    width: 58px;
+    height: 32px;
+    cursor: pointer;
+  }
+
+  .toggleCheckbox {
+    display: none;
+  }
+}
+
+.mobileFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include media-query(sm) {
+    flex-direction: row !important;
+    justify-content: space-between;
+    margin-top: auto;
+  }
+}
+.mobile__btn {
+  @include media-query(sm) {
+    margin-top: auto;
+  }
+}
+.page__form__row:last-child {
+  @include media-query(sm) {
+    margin-top: auto;
   }
 }
