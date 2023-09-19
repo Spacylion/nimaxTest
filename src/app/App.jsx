@@ -1,4 +1,4 @@
-import { Step1, Step2, Step3 } from "../pages"
+import { Step1 } from "../pages"
 
 function App() {
   return (
