@@ -8,8 +8,22 @@ $breakpoint-sm: 320px;
 $breakpoint-md: 640px;
 $breakpoint-lg: 768px;
 
-// Container styles
-$maxWidthContainer: 1280px;
+// MIXINS
+@mixin media-query($breakpoint) {
+  @if $breakpoint == "sm" {
+    @media (max-width: #{$breakpoint-sm}) {
+      @content;
+    }
+  } @else if $breakpoint == "md" {
+    @media (min-width: #{$breakpoint-sm + 1}) and (max-width: #{$breakpoint-md}) {
+      @content;
+    }
+  } @else if $breakpoint == "lg" {
+    @media (min-width: #{$breakpoint-md + 1}) and (max-width: #{$breakpoint-lg}) {
+      @content;
+    }
+  }
+}
 
 // Colors
 $mainColor: #000;
@@ -24,19 +38,10 @@ $arrowColor: #6b7280;
 $fontFamily: "Inter", sans-serif;
 $fontSize: 16px;
 
-// MIXINS
-@mixin media-query($breakpoint) {
-  @if $breakpoint == "sm" {
-    @media (max-width: 640px) {
-      @content;
-    }
-  } @else if $breakpoint == "md" {
-    @media (min-width: 641px) and (max-width: 768px) {
-      @content;
-    }
-  } @else if $breakpoint == "lg" {
-    @media (min-width: 769px) {
-      @content;
-    }
-  }
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
 }

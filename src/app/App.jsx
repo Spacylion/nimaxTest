@@ -4,8 +4,8 @@ function App() {
   return (
     <>
       <Step1 />
-      <Step2 />
-      <Step3 />
+      {/* <Step2 />
+      <Step3 /> */}
     </>
   )
 }
