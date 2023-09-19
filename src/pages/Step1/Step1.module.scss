@@ -1,89 +1,116 @@
 @import "../../app/lib/styles/global.scss";
 
-.step1-container {
-  margin: 0 auto;
-  max-width: 640px;
-  padding: 16px 64px;
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex: 1 0 0;
-  align-self: stretch;
+  justify-content: center;
+  align-items: center;
+}
 
-  .step1-title {
-    color: $mainColor; // Use the defined color variable
-    font-family: $fontFamily; // Use the defined font-family variable
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 32px;
-    margin-bottom: 6px;
-    padding-bottom: 4px;
-    border-bottom: 1px solid $mainColor; // Use the defined color variable
+.step1Container {
+  width: 768px;
+  min-height: 728px;
+  padding: 16px 64px; /* Updated padding */
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+  &__wrapper {
+    max-width: 640px;
   }
 
-  .step1-content {
+  &__title {
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  &__subtitle {
+    color: #000;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  &__content {
     display: flex;
-    padding: 10px 0px;
     flex-direction: column;
+    gap: 8px;
+    padding: 10px 0;
+  }
+
+  &__row {
+    display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    flex: 1 0 0;
-    align-self: stretch;
+    gap: 4px;
+    padding-bottom: 8px;
+    flex-wrap: wrap; /* Allow for column layout on small screens */
+    width: 100%; /* Each row takes full width */
+  }
 
-    .step1-form-group {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
-      align-self: stretch;
+  &__form-group {
+    width: 50%; /* Each child takes up 50% of the row */
+    height: 32px;
+    display: flex;
+    flex-direction: column;
 
-      .step1-label {
-        display: flex;
-        height: 32px;
-        align-items: center;
-        gap: 10px;
-        flex: 1 0 0;
-      }
-
-      .step1-input-group {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-        flex: 1 0 0;
-      }
-    }
-
-    .total-cost {
-      font-weight: 600;
+    &__label {
+      font-family: Inter;
       font-size: 16px;
-      color: $mainColor; // Use the defined color variable
-      margin-top: 10px;
+      font-style: normal;
+      font-weight: 400;
+      margin-bottom: 4px;
     }
 
-    .step1-button-container {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 10px;
-      align-self: stretch;
+    &__input-group {
+      /* Add your input styling here */
+    }
+  }
 
-      .next-button {
-        background: #3b82f6;
-        color: #fff;
-        font-family: Inter, sans-serif; // Use the defined font-family variable
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: normal;
-        width: 128px;
-        padding: 10px 14px;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        border-radius: 4px;
-      }
+  &__radio-group {
+    /* Add your radio button styling here */
+  }
+
+  &__checkbox-group {
+    /* Add your checkbox styling here */
+  }
+
+  &__total-cost {
+    /* Add styling for the total cost here */
+    margin-top: 16px;
+  }
+
+  &__next-button {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    /* Add styling for the "Далее" button here */
+  }
+
+  /* Media query for small screens */
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: auto; /* Adjust height for small screens as needed */
+
+    &__row {
+      flex-direction: column; /* Display rows as columns on small screens */
+    }
+
+    &__form-group {
+      width: 100%; /* Full width for children on small screens */
+    }
+
+    &__next-button {
+      position: relative; /* Revert button positioning for small screens */
+      margin-top: 16px; /* Add spacing below content */
     }
   }
 }

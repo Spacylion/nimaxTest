@@ -9,81 +9,87 @@ const Step1 = () => {
   const [insurance, setInsurance] = useState(true)
 
   return (
-    <div className={styles["step1-container"]}>
-      <h1 className={styles["step1-title"]}>Бронирование номера</h1>
-      <div className={styles["step1-content"]}>
-        <div className={styles["step1-form-group"]}>
-          <label className={styles["step1-label"]}>Количество взрослых</label>
-          <div className={styles["step1-input-group"]}>
-            <input
-              type='number'
-              value={adults}
-              onChange={(e) => setAdults(e.target.value)}
-            />
+    <div className={styles.wrapper}>
+      <div className={styles.step1Container}>
+        <div className={styles.step1Container__wrapper}>
+          <h1 className={styles.step1Title}>Бронирование номера</h1>
+          <p className={styles.step1Subtitle}>Расчет стоимости</p>
+          <div className={styles.step1Content}>
+            <div className={styles.step1ContentMain}>
+              <div className={styles.step1Row}>
+                <p className={styles.step1Label}>Количество взрослых</p>
+                <div className={styles.step1InputGroup}>
+                  <input
+                    type='number'
+                    value={adults}
+                    onChange={(e) => setAdults(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className={styles.step1Row}>
+                <p className={styles.step1Label}>
+                  Количество детей от 5 до 12 лет
+                </p>
+                <div className={styles.step1InputGroup}>
+                  <input
+                    type='number'
+                    value={child}
+                    onChange={(e) => setChild(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.step1Row}>
+                <p className={styles.step1Label}>Количество детей до 5 лет</p>
+                <div className={styles.step1InputGroup}>
+                  <input
+                    type='number'
+                    value={baby}
+                    onChange={(e) => setBaby(e.target.value)}
+                  />
+                </div>
+                <div className={styles.step1Row}>
+                  <p className={styles.step1Label}>Тип номера</p>
+                  <div className={styles.step1RadioGroup}>
+                    <input
+                      type='radio'
+                      name='roomType'
+                      value='Эконом'
+                      checked
+                    />{" "}
+                    Эконом
+                    <input type='radio' name='roomType' value='Стандарт' />{" "}
+                    Стандарт
+                    <input type='radio' name='roomType' value='Люкс' /> Люкс
+                  </div>
+                </div>
+              </div>
+              <div className={styles.step1Row}>
+                <p className={styles.step1Label}>Количество ночей</p>
+                <div className={styles.step1InputGroup}>
+                  <input
+                    type='number'
+                    value={nights}
+                    onChange={(e) => setNights(e.target.value)}
+                  />
+                </div>
+                <div className={styles.step1Row}>
+                  <p className={styles.step1Label}>Страховка</p>
+                  <div className={styles.step1CheckboxGroup}>
+                    <input
+                      type='checkbox'
+                      checked={insurance}
+                      onChange={(e) => setInsurance(e.target.checked)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={styles.step1TotalCost}>Итого: 1 234 ₽</div>
+            </div>
+            <button className={styles.step1NextButton}>Далее</button>
           </div>
         </div>
-        <div className={styles["step1-form-group"]}>
-          <label className={styles["label"]}>
-            Количество детей от 5 до 12 лет
-          </label>
-          <div className={styles["input-group"]}>
-            <input
-              type='number'
-              value={child}
-              onChange={(e) => setChild(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className={styles["form-group"]}>
-          <label className={styles["label"]}>Количество детей до 5 лет</label>
-          <div className={styles["input-group"]}>
-            <input
-              type='number'
-              value={baby}
-              onChange={(e) => setBaby(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className={styles["form-group"]}>
-          <label className={styles["label"]}>Тип номера</label>
-          <div className={styles["radio-group"]}>
-            <label>
-              <input type='radio' name='roomType' value='Эконом' checked />{" "}
-              Эконом
-            </label>
-            <label>
-              <input type='radio' name='roomType' value='Стандарт' /> Стандарт
-            </label>
-            <label>
-              <input type='radio' name='roomType' value='Люкс' /> Люкс
-            </label>
-          </div>
-        </div>
-        <div className={styles["form-group"]}>
-          <label className={styles["label"]}>Количество ночей</label>
-          <div className={styles["input-group"]}>
-            <input
-              type='number'
-              value={nights}
-              onChange={(e) => setNights(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className={styles["form-group"]}>
-          <label className={styles["label"]}>Страховка</label>
-          <div className={styles["checkbox-group"]}>
-            <label>
-              <input
-                type='checkbox'
-                checked={insurance}
-                onChange={(e) => setInsurance(e.target.checked)}
-              />{" "}
-            </label>
-          </div>
-        </div>
-        <div className={styles["total-cost"]}>Итого: 1 234 ₽</div>
       </div>
-      <button className={styles["next-button"]}>Далее</button>
     </div>
   )
 }
