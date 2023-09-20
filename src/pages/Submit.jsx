@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import styles from "./Submit.module.scss"
-import ConfirmTick from "../../app/assets/images/ConfirmTick.svg"
+import ConfirmTick from "../app/assets/images/ConfirmTick.svg"
 
 const Submit = ({ onReset }) => {
   return (

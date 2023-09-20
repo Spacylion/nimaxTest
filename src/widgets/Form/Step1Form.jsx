@@ -1,21 +1,9 @@
-import { useState } from "react"
 import PropTypes from "prop-types"
-import styles from "./Step1.module.scss"
+import styles from "./Step1Form.module.scss"
 import ToggleOn from "../../app/assets/images/ToggleOn.svg"
 import ToggleOff from "../../app/assets/images/ToggleOff.svg"
 
-const Step1 = ({ onNextStep, formData, onFormChange }) => {
-  const [roomTypeOptions] = useState(["Эконом", "Стандарт", "Люкс"])
-  const [roomType, setRoomType] = useState("Эконом")
-
-  const handleRoomTypeChange = (e) => {
-    setRoomType(e.target.value)
-  }
-
-  const handleInputChange = (fieldName, value) => {
-    onFormChange(fieldName, value)
-  }
-
+const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
   return (
     <div className={styles.page}>
       <div className={styles.page__main}>
@@ -48,7 +36,7 @@ const Step1 = ({ onNextStep, formData, onFormChange }) => {
               {
                 label: "Тип номера",
                 fieldName: "roomType",
-                value: roomType,
+                value: formData.roomType,
                 inputType: window.innerWidth <= 320 ? "select" : "radio",
                 options: roomTypeOptions,
               },
@@ -71,30 +59,22 @@ const Step1 = ({ onNextStep, formData, onFormChange }) => {
             ].map((item, index) => (
               <div key={index} className={styles.page__form__row}>
                 <div className={styles.page__form__row__child__1}>
-                  <p className={styles.page__form__text}>{item.label}</p>
+                  {item.label === "Страховка" ? (
+                    <p className={styles.page__form__text}>Страховка</p>
+                  ) : (
+                    <p className={styles.page__form__text}>{item.label}</p>
+                  )}
                 </div>
                 <div
                   className={`${styles.page__form__row__child__2} ${styles.rowinRow}`}
                 >
-                  {item.inputType === "toggle" ||
-                  item.inputType === "checkbox" ? (
-                    <div className={styles.toggleContainer}>
-                      <img
-                        src={item.value ? ToggleOff : ToggleOn}
-                        alt={item.value ? "Toggle Off" : "Toggle On"}
-                        onClick={() =>
-                          handleInputChange(item.fieldName, !item.value)
-                        }
-                        className={styles.toggleIcon}
-                      />
-                    </div>
-                  ) : item.label === "Итого:" ? (
+                  {item.label === "Итого:" ? (
                     <p className={styles.page__form__text}>{item.value}</p>
                   ) : item.inputType === "select" ? (
                     <select
                       value={item.value}
                       onChange={(e) =>
-                        handleInputChange(item.fieldName, e.target.value)
+                        onFormChange(item.fieldName, e.target.value)
                       }
                       className={styles.input}
                     >
@@ -119,7 +99,7 @@ const Step1 = ({ onNextStep, formData, onFormChange }) => {
                           value={option}
                           checked={item.value === option}
                           onChange={(e) =>
-                            handleInputChange(item.fieldName, e.target.value)
+                            onFormChange(item.fieldName, e.target.value)
                           }
                         />
                         <label className={styles.page__form__text}>
@@ -127,14 +107,26 @@ const Step1 = ({ onNextStep, formData, onFormChange }) => {
                         </label>
                       </div>
                     ))
+                  ) : item.inputType === "toggle" ? (
+                    <>
+                      <img
+                        src={item.value ? ToggleOn : ToggleOff}
+                        alt='Toggle'
+                        onClick={() =>
+                          onFormChange(item.fieldName, !item.value)
+                        }
+                        className={styles.toggleIcon}
+                      />
+                      <span className={styles.page__form__text}>
+                        {item.label}
+                      </span>
+                    </>
                   ) : (
                     <input
                       className={styles.input}
-                      type='number'
-                      value={item.value}
-                      onChange={(e) =>
-                        handleInputChange(item.fieldName, e.target.value)
-                      }
+                      type={item.inputType}
+                      checked={item.value}
+                      onChange={() => onFormChange(item.fieldName, !item.value)}
                     />
                   )}
                 </div>
@@ -156,10 +148,11 @@ const Step1 = ({ onNextStep, formData, onFormChange }) => {
   )
 }
 
-Step1.propTypes = {
-  onNextStep: PropTypes.func.isRequired,
+Step1Form.propTypes = {
   formData: PropTypes.object.isRequired,
   onFormChange: PropTypes.func.isRequired,
+  onNextStep: PropTypes.func.isRequired,
+  roomTypeOptions: PropTypes.array.isRequired,
 }
 
-export default Step1
+export default Step1Form

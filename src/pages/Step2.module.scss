@@ -1,12 +1,14 @@
-@import "../../app/lib/styles/global.scss";
+@import "../app/lib/styles/global.scss";
 .page {
   display: flex;
   flex-direction: column;
   max-width: 100%;
+
   min-height: 100vh;
-  padding: 10px;
+  padding: 16px 20px;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 
   @include media-query(md) {
     max-width: 660px;
@@ -14,7 +16,6 @@
   @include media-query(sm) {
     max-width: 320px;
     margin: 0;
-    padding: 10px;
     flex-direction: row;
   }
 
@@ -27,9 +28,10 @@
     align-self: stretch;
 
     @include media-query(md) {
+      max-width: 660px;
     }
     @include media-query(sm) {
-      max-width: 100%;
+      max-width: 320px;
     }
 
     .page__info {
@@ -79,6 +81,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        gap: 8px;
         align-self: stretch;
 
         .page__form__row {
@@ -89,16 +92,11 @@
           align-self: stretch;
 
           @include media-query(md) {
-            padding-bottom: 16px;
+            padding-bottom: 0px;
           }
           @include media-query(sm) {
             flex-direction: column;
             align-items: flex-start;
-          }
-
-          &:nth-last-child(-n + 2) {
-            /* Select the last 2 children */
-            flex-direction: row; /* Set row layout for the last 2 children */
           }
 
           &__child__1 {
@@ -180,21 +178,20 @@
   }
   .page__main__step__wrapper__buttons {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: row; // Keep this consistent
+    justify-content: space-between; // Make sure this is the same
     align-items: center;
-    align-self: flex-end;
+    gap: 10px;
+    align-self: stretch;
 
     @include media-query(sm) {
-      flex-direction: row;
-      justify-content: space-between;
+      flex-direction: column; // For mobile devices
       align-items: center;
-      width: 100%;
     }
-
     .page__main__step__wrapper__button {
       display: flex;
-      align-items: flex-start;
+      gap: 0;
+      justify-content: space-between;
 
       .button {
         display: flex;
@@ -214,6 +211,7 @@
         border: none;
         position: relative;
         transition: width 0.2s ease, height 0.2s ease;
+
         &:hover {
           background: $hoveredColor;
           cursor: pointer;
@@ -226,9 +224,8 @@
           cursor: not-allowed;
         }
       }
-
       @include media-query(sm) {
-        width: 100%;
+        width: 90%;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -238,7 +235,6 @@
       }
     }
   }
-
   .toggleContainer {
     display: flex;
     align-items: center;
@@ -302,5 +298,49 @@
 .page__form__row:last-child {
   @include media-query(sm) {
     margin-top: auto;
+  }
+}
+
+.button__back {
+  display: flex;
+  height: 44px;
+  padding: 10px 14px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 4px;
+  background: #fff;
+  color: $blueColor;
+  font-family: $fontFamily;
+  font-size: $fontSize;
+  font-weight: 500;
+  line-height: normal;
+  border: none;
+  position: relative;
+  color: #000;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  transition: width 0.2s ease, height 0.2s ease;
+
+  &:hover {
+    background: $backColor;
+    color: $backgroundColor;
+    cursor: pointer;
+  }
+
+  &:focus {
+    border: 3px double $backgroundColor;
+  }
+
+  &:disabled {
+    background: $disabledColor;
+    cursor: not-allowed;
+  }
+
+  @include media-query(sm) {
+    width: 100%;
   }
 }
