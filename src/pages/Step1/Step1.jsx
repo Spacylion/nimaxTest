@@ -1,18 +1,20 @@
+// Step1.jsx
 import { useState } from "react"
+import PropTypes from "prop-types"
 import styles from "./Step1.module.scss"
 import ToggleOn from "../../app/assets/images/ToggleOn.svg"
 import ToggleOff from "../../app/assets/images/ToggleOff.svg"
 
-const Step1 = () => {
-  const [adults, setAdults] = useState(1)
-  const [child, setChild] = useState(0)
-  const [baby, setBaby] = useState(0)
-  const [nights, setNights] = useState(0)
-  const [insurance, setInsurance] = useState(true)
+const Step1 = ({ onNextStep, formData, onFormChange }) => {
+  const [roomTypeOptions] = useState(["Эконом", "Стандарт", "Люкс"])
   const [roomType, setRoomType] = useState("Эконом")
 
   const handleRoomTypeChange = (e) => {
     setRoomType(e.target.value)
+  }
+
+  const handleInputChange = (fieldName, value) => {
+    onFormChange(fieldName, value)
   }
 
   return (
@@ -28,180 +30,138 @@ const Step1 = () => {
         </div>
         <div className={styles.page__main__step__wrapper}>
           <div className={styles.page__main__step__wrapper__form1}>
-            <div className={styles.page__form__row}>
-              <div className={styles.page__form__row__child__1}>
-                <p className={styles.page__form__text}>Количество взрослых</p>
-              </div>
-              <div className={styles.page__form__row__child__2}>
-                <input
-                  className={styles.input}
-                  type='number'
-                  value={adults}
-                  onChange={(e) => setAdults(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className={styles.page__form__row}>
-              <div className={styles.page__form__row__child__1}>
-                <p className={styles.page__form__text}>
-                  Количество детей от 5 до 12 лет
-                </p>
-              </div>
-              <div className={styles.page__form__row__child__2}>
-                <input
-                  className={styles.input}
-                  type='number'
-                  value={child}
-                  onChange={(e) => setChild(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className={styles.page__form__row}>
-              <div className={styles.page__form__row__child__1}>
-                <p className={styles.page__form__text}>
-                  Количество детей до 5 лет
-                </p>
-              </div>
-              <div className={styles.page__form__row__child__2}>
-                <input
-                  className={styles.input}
-                  type='number'
-                  value={baby}
-                  onChange={(e) => setBaby(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className={styles.page__form__row}>
-              <div className={styles.page__form__row__child__1}>
-                <p className={styles.page__form__text}>Тип номера</p>
-              </div>
-              <div className={styles.page__form__row__child__2}>
-                {window.innerWidth <= 320 ? (
-                  <div className={styles.page__form__row__child__2__dropdown}>
+            {[
+              {
+                label: "Количество взрослых",
+                fieldName: "adults",
+                value: formData.adults,
+              },
+              {
+                label: "Количество детей от 5 до 12 лет",
+                fieldName: "child",
+                value: formData.child,
+              },
+              {
+                label: "Количество детей до 5 лет",
+                fieldName: "baby",
+                value: formData.baby,
+              },
+              {
+                label: "Тип номера",
+                fieldName: "roomType",
+                value: roomType,
+                inputType: window.innerWidth <= 320 ? "select" : "radio",
+                options: roomTypeOptions,
+              },
+              {
+                label: "Количество ночей",
+                fieldName: "nights",
+                value: formData.nights,
+              },
+              {
+                label: "Страховка",
+                fieldName: "insurance",
+                value: formData.insurance,
+                inputType: window.innerWidth <= 320 ? "toggle" : "checkbox",
+              },
+              {
+                label: "Итого:",
+                fieldName: "total",
+                value: "1 234 ₽",
+              },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className={`${styles.page__form__row} ${
+                  item.inputType === "select" && styles.mobileFlex
+                }`}
+              >
+                <div className={styles.page__form__row__child__1}>
+                  <p className={styles.page__form__text}>{item.label}</p>
+                </div>
+                <div className={styles.page__form__row__child__2}>
+                  {item.inputType === "select" ? (
                     <select
-                      value={roomType}
-                      onChange={handleRoomTypeChange}
+                      value={item.value}
+                      onChange={(e) =>
+                        handleInputChange(item.fieldName, e.target.value)
+                      }
                       className={styles.input}
                     >
-                      <option value='Эконом'>Эконом</option>
-                      <option value='Стандарт'>Стандарт</option>
-                      <option value='Люкс'>Люкс</option>
+                      {item.options.map((option, optionIndex) => (
+                        <option key={optionIndex} value={option}>
+                          {option}
+                        </option>
+                      ))}
                     </select>
-                  </div>
-                ) : (
-                  <>
-                    <div
-                      className={styles.page__form__row__child__2__radiobutton}
-                    >
-                      <input
-                        className={styles.input__radio}
-                        type='radio'
-                        name='roomType'
-                        value='Эконом'
-                        checked={roomType === "Эконом"}
-                        onChange={handleRoomTypeChange}
-                      />
-                      <label className={styles.page__form__text}>Эконом</label>
-                    </div>
-                    <div
-                      className={styles.page__form__row__child__2__radiobutton}
-                    >
-                      <input
-                        className={styles.input__radio}
-                        type='radio'
-                        name='roomType'
-                        value='Стандарт'
-                        checked={roomType === "Стандарт"}
-                        onChange={handleRoomTypeChange}
-                      />
-                      <label className={styles.page__form__text}>
-                        Стандарт
-                      </label>
-                    </div>
-                    <div
-                      className={styles.page__form__row__child__2__radiobutton}
-                    >
-                      <input
-                        className={styles.input__radio}
-                        type='radio'
-                        name='roomType'
-                        value='Люкс'
-                        checked={roomType === "Люкс"}
-                        onChange={handleRoomTypeChange}
-                      />
-                      <label className={styles.page__form__text}>Люкс</label>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-
-            <div className={styles.page__form__row}>
-              <div className={styles.page__form__row__child__1}>
-                <p className={styles.step1Label}>Количество ночей</p>
-              </div>
-              <div className={styles.page__form__row__child__2}>
-                <input
-                  className={styles.input}
-                  type='number'
-                  value={nights}
-                  onChange={(e) => setNights(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className={`${styles.page__form__row} ${styles.mobileFlex}`}>
-              <div className={styles.page__form__row__child__1}>
-                <p className={styles.page__form__text}>Страховка</p>
-              </div>
-              <div className={styles.page__form__row__child__2}>
-                <div className={styles.toggleContainer}>
-                  {window.innerWidth <= 320 ? (
-                    <>
+                  ) : item.inputType === "radio" ? (
+                    item.options.map((option, optionIndex) => (
+                      <div
+                        key={optionIndex}
+                        className={
+                          styles.page__form__row__child__2__radiobutton
+                        }
+                      >
+                        <input
+                          className={styles.input__radio}
+                          type='radio'
+                          name={item.fieldName}
+                          value={option}
+                          checked={item.value === option}
+                          onChange={(e) =>
+                            handleInputChange(item.fieldName, e.target.value)
+                          }
+                        />
+                        <label className={styles.page__form__text}>
+                          {option}
+                        </label>
+                      </div>
+                    ))
+                  ) : item.inputType === "toggle" ? (
+                    <div className={styles.toggleContainer}>
                       <img
-                        src={insurance ? ToggleOff : ToggleOn}
-                        alt={insurance ? "Toggle Off" : "Toggle On"}
-                        onClick={() => setInsurance(!insurance)}
+                        src={item.value ? ToggleOff : ToggleOn}
+                        alt={item.value ? "Toggle Off" : "Toggle On"}
+                        onClick={() =>
+                          handleInputChange(item.fieldName, !item.value)
+                        }
                         className={styles.toggleIcon}
                       />
-                    </>
+                    </div>
                   ) : (
-                    <>
-                      <input
-                        type='checkbox'
-                        checked={insurance}
-                        onChange={() => setInsurance(!insurance)}
-                        className={styles.toggleCheckbox}
-                      />
-                    </>
+                    <input
+                      className={styles.input}
+                      type='number'
+                      value={item.value}
+                      onChange={(e) =>
+                        handleInputChange(item.fieldName, e.target.value)
+                      }
+                    />
                   )}
                 </div>
               </div>
-            </div>
-
-            <div className={`${styles.page__form__row} ${styles.mobileFlex}`}>
-              <div className={styles.page__form__row__child__1}>
-                <p>Итого:</p>
-              </div>
-              <div className={styles.page__form__row__child__2}>
-                <p className={styles.sumnumber}>1 234 ₽</p>
-              </div>
-            </div>
+            ))}
           </div>
 
           <div
             className={`${styles.page__main__step__wrapper__buttons} ${styles.mobile__btn}`}
           >
             <div className={styles.page__main__step__wrapper__button}>
-              <button className={styles.button}>Далее</button>
+              <button onClick={onNextStep} className={styles.button}>
+                Далее
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
   )
+}
+
+Step1.propTypes = {
+  onNextStep: PropTypes.func.isRequired,
+  formData: PropTypes.object.isRequired,
+  onFormChange: PropTypes.func.isRequired,
 }
 
 export default Step1

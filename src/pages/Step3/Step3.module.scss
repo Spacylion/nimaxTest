@@ -1,0 +1,319 @@
+@import "../../app/lib/styles/global.scss";
+.page {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  min-height: 100vh;
+  padding: 16px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  @include media-query(md) {
+    max-width: 640px;
+  }
+  @include media-query(sm) {
+    max-width: 320px;
+    margin: 0;
+    flex-direction: row;
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    flex-shrink: 0;
+    align-self: stretch;
+
+    @include media-query(md) {
+      max-width: 600px;
+    }
+    @include media-query(sm) {
+      max-width: 320px;
+    }
+
+    .page__info {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      align-self: stretch;
+
+      @include media-query(md) {
+      }
+      @include media-query(sm) {
+      }
+
+      &__title,
+      &__subtitle {
+        display: flex;
+        padding-bottom: 0px;
+        align-items: flex-start;
+        align-self: stretch;
+
+        .title,
+        .subtitle {
+          color: $mainColor;
+          font-family: $fontFamily;
+          font-weight: 700;
+          line-height: normal;
+          flex: 1 0 0;
+        }
+
+        .title {
+          font-size: 32px;
+        }
+
+        .subtitle {
+          font-size: 18px;
+          font-weight: 500;
+        }
+      }
+    }
+
+    &__step__wrapper {
+      display: flex;
+      padding: 10px 0px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      flex: 1 0 0;
+      align-self: stretch;
+
+      @include media-query(sm) {
+      }
+
+      &__payment {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        flex: 1 0 0;
+        align-self: stretch;
+
+        @include media-query(sm) {
+        }
+
+        &__row {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+
+          @include media-query(sm) {
+          }
+
+          .bold__text {
+            color: #000;
+            font-family: Inter;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+
+            @include media-query(sm) {
+            }
+          }
+          .text {
+            color: #000;
+            font-family: Inter;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+
+            @include media-query(sm) {
+            }
+          }
+        }
+      }
+    }
+  }
+  .page__main__step__wrapper__buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+
+    @include media-query(sm) {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page__main__step__wrapper__button__back {
+      display: flex;
+      gap: 0;
+      justify-content: space-between;
+      @include media-query(md) {
+        display: flex;
+        max-width: 300px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      @include media-query(sm) {
+      }
+    }
+    .page__main__step__wrapper__button {
+      display: flex;
+      gap: 0;
+      justify-content: space-between;
+
+      @include media-query(md) {
+      }
+      @include media-query(sm) {
+      }
+
+      .button {
+        display: flex;
+        width: 128px;
+        height: 44px;
+        padding: 10px 14px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        border-radius: 4px;
+        background: $blueColor;
+        color: $whiteColor;
+        font-family: $fontFamily;
+        font-size: $fontSize;
+        font-weight: 500;
+        line-height: normal;
+        border: none;
+        position: relative;
+        transition: width 0.2s ease, height 0.2s ease;
+
+        &:hover {
+          background: $hoveredColor;
+          cursor: pointer;
+        }
+        &:focus {
+          border: 3px double $whiteColor;
+        }
+        &:disabled {
+          background: $disabledColor;
+          cursor: not-allowed;
+        }
+      }
+      @include media-query(sm) {
+        width: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .button {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .toggleContainer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .toggleIcon {
+    width: 58px;
+    height: 32px;
+    cursor: pointer;
+  }
+}
+@include media-query(sm) {
+  .page__form__row__child__2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &__dropdown {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      align-self: stretch;
+    }
+  }
+  .toggleContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  .toggleIcon {
+    width: 58px;
+    height: 32px;
+    cursor: pointer;
+  }
+
+  .toggleCheckbox {
+    display: none;
+  }
+}
+
+.mobileFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include media-query(sm) {
+    flex-direction: row !important;
+    justify-content: space-between;
+    margin-top: auto;
+  }
+}
+.mobile__btn {
+  @include media-query(sm) {
+    margin-top: auto;
+  }
+}
+.page__form__row:last-child {
+  @include media-query(sm) {
+    margin-top: auto;
+  }
+}
+
+.button__back {
+  display: flex;
+  height: 44px;
+  padding: 10px 14px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 4px;
+  background: #fff;
+  color: $blueColor;
+  font-family: $fontFamily;
+  font-size: $fontSize;
+  font-weight: 500;
+  line-height: normal;
+  border: none;
+  position: relative;
+  color: #000;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  transition: width 0.2s ease, height 0.2s ease;
+
+  &:hover {
+    background: $backColor;
+    color: $backgroundColor;
+    cursor: pointer;
+  }
+
+  &:focus {
+    border: 3px double $backgroundColor;
+  }
+
+  &:disabled {
+    background: $disabledColor;
+    cursor: not-allowed;
+  }
+
+  @include media-query(sm) {
+    width: 100%;
+  }
+}
