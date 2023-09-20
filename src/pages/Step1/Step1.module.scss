@@ -3,12 +3,10 @@
   display: flex;
   flex-direction: column;
   max-width: 100%;
-
-  height: 100vh; /* Set height to 100vh on small screens */
-  padding: 16px 20px;
+  min-height: 100vh;
+  padding: 10px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
 
   @include media-query(md) {
     max-width: 660px;
@@ -16,6 +14,7 @@
   @include media-query(sm) {
     max-width: 320px;
     margin: 0;
+    padding: 10px;
     flex-direction: row;
   }
 
@@ -28,10 +27,9 @@
     align-self: stretch;
 
     @include media-query(md) {
-      max-width: 660px;
     }
     @include media-query(sm) {
-      max-width: 320px;
+      max-width: 100%;
     }
 
     .page__info {
@@ -81,7 +79,6 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: 8px;
         align-self: stretch;
 
         .page__form__row {
@@ -92,11 +89,16 @@
           align-self: stretch;
 
           @include media-query(md) {
-            padding-bottom: 0px;
+            padding-bottom: 16px;
           }
           @include media-query(sm) {
             flex-direction: column;
             align-items: flex-start;
+          }
+
+          &:nth-last-child(-n + 2) {
+            /* Select the last 2 children */
+            flex-direction: row; /* Set row layout for the last 2 children */
           }
 
           &__child__1 {
@@ -178,20 +180,21 @@
   }
   .page__main__step__wrapper__buttons {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 10px;
-    align-self: stretch;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-self: flex-end;
 
     @include media-query(sm) {
+      flex-direction: row;
+      justify-content: space-between;
       align-items: center;
+      width: 100%;
     }
+
     .page__main__step__wrapper__button {
       display: flex;
-      padding: 0px 10px;
-      flex-direction: column;
       align-items: flex-start;
-      gap: 10px;
 
       .button {
         display: flex;
@@ -211,7 +214,6 @@
         border: none;
         position: relative;
         transition: width 0.2s ease, height 0.2s ease;
-
         &:hover {
           background: $hoveredColor;
           cursor: pointer;
@@ -224,8 +226,9 @@
           cursor: not-allowed;
         }
       }
+
       @include media-query(sm) {
-        width: 90%;
+        width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -235,6 +238,7 @@
       }
     }
   }
+
   .toggleContainer {
     display: flex;
     align-items: center;

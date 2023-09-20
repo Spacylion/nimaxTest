@@ -178,14 +178,14 @@
   }
   .page__main__step__wrapper__buttons {
     display: flex;
-    flex-direction: row; // Изменено на row
-    justify-content: space-between;
+    flex-direction: row; // Keep this consistent
+    justify-content: space-between; // Make sure this is the same
     align-items: center;
     gap: 10px;
     align-self: stretch;
 
     @include media-query(sm) {
-      flex-direction: column; // Для мобильных устройств
+      flex-direction: column; // For mobile devices
       align-items: center;
     }
     .page__main__step__wrapper__button {

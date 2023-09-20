@@ -1,4 +1,3 @@
-// Step1.jsx
 import { useState } from "react"
 import PropTypes from "prop-types"
 import styles from "./Step1.module.scss"
@@ -70,17 +69,28 @@ const Step1 = ({ onNextStep, formData, onFormChange }) => {
                 value: "1 234 ₽",
               },
             ].map((item, index) => (
-              <div
-                key={index}
-                className={`${styles.page__form__row} ${
-                  item.inputType === "select" && styles.mobileFlex
-                }`}
-              >
+              <div key={index} className={styles.page__form__row}>
                 <div className={styles.page__form__row__child__1}>
                   <p className={styles.page__form__text}>{item.label}</p>
                 </div>
-                <div className={styles.page__form__row__child__2}>
-                  {item.inputType === "select" ? (
+                <div
+                  className={`${styles.page__form__row__child__2} ${styles.rowinRow}`}
+                >
+                  {item.inputType === "toggle" ||
+                  item.inputType === "checkbox" ? (
+                    <div className={styles.toggleContainer}>
+                      <img
+                        src={item.value ? ToggleOff : ToggleOn}
+                        alt={item.value ? "Toggle Off" : "Toggle On"}
+                        onClick={() =>
+                          handleInputChange(item.fieldName, !item.value)
+                        }
+                        className={styles.toggleIcon}
+                      />
+                    </div>
+                  ) : item.label === "Итого:" ? (
+                    <p className={styles.page__form__text}>{item.value}</p>
+                  ) : item.inputType === "select" ? (
                     <select
                       value={item.value}
                       onChange={(e) =>
@@ -117,17 +127,6 @@ const Step1 = ({ onNextStep, formData, onFormChange }) => {
                         </label>
                       </div>
                     ))
-                  ) : item.inputType === "toggle" ? (
-                    <div className={styles.toggleContainer}>
-                      <img
-                        src={item.value ? ToggleOff : ToggleOn}
-                        alt={item.value ? "Toggle Off" : "Toggle On"}
-                        onClick={() =>
-                          handleInputChange(item.fieldName, !item.value)
-                        }
-                        className={styles.toggleIcon}
-                      />
-                    </div>
                   ) : (
                     <input
                       className={styles.input}
@@ -142,7 +141,6 @@ const Step1 = ({ onNextStep, formData, onFormChange }) => {
               </div>
             ))}
           </div>
-
           <div
             className={`${styles.page__main__step__wrapper__buttons} ${styles.mobile__btn}`}
           >
