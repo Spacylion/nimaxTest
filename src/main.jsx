@@ -1,5 +1,5 @@
 import React from "react"
-import ReactDOM from "react-dom/client"
+import ReactDOM from "react-dom" // Updated import
 import App from "@/app/App"
 import "@/app/lib/styles/global.scss"
 import { Provider } from "react-redux"
@@ -11,7 +11,7 @@ import rootReducer from "@/redux/store/reducers/reducers"
 // Create your Redux store
 const store = createStore(rootReducer)
 
-// Use createRoot from react-dom/client
+// Use createRoot from react-dom
 const root = document.getElementById("root")
 const reactRoot = ReactDOM.createRoot(root)
 
