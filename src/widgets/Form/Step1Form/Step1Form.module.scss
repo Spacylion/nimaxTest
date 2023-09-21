@@ -47,7 +47,6 @@
         .title,
         .subtitle {
           color: $mainColor;
-          font-family: $fontFamily;
           font-weight: 700;
           line-height: normal;
           flex: 1 0 0;
@@ -95,8 +94,7 @@
           }
 
           &:nth-last-child(-n + 2) {
-            /* Select the last 2 children */
-            flex-direction: row; /* Set row layout for the last 2 children */
+            flex-direction: row;
           }
 
           &__child__1 {
@@ -117,7 +115,7 @@
 
             .page__form__text {
               color: $mainColor;
-              font-family: $fontFamily;
+
               font-size: 16px;
               font-weight: 400;
               line-height: normal;
@@ -141,15 +139,9 @@
               padding: 7px 8px;
               justify-content: space-between;
               align-items: center;
-
               border-radius: 4px;
               border: 1px solid $inputColor;
               background: $whiteColor;
-
-              .error {
-                border: 1px solid #fecaca;
-                color: #ef4444;
-              }
 
               @include media-query(sm) {
                 align-self: stretch;
@@ -163,7 +155,7 @@
             }
             .page__form__text {
               color: $mainColor;
-              font-family: $fontFamily;
+
               font-size: $fontSize;
               font-weight: 400;
               line-height: normal;
@@ -175,7 +167,7 @@
             }
             .sumnumber {
               color: $mainColor;
-              font-family: $fontFamily;
+
               font-size: $fontSize;
               font-weight: 600;
               line-height: normal;
@@ -214,7 +206,7 @@
         border-radius: 4px;
         background: $blueColor;
         color: $whiteColor;
-        font-family: $fontFamily;
+
         font-size: $fontSize;
         font-weight: 500;
         line-height: normal;
@@ -258,6 +250,7 @@
     cursor: pointer;
   }
 }
+
 @include media-query(sm) {
   .page__form__row__child__2 {
     display: flex;
@@ -311,4 +304,63 @@
   @include media-query(sm) {
     margin-top: auto;
   }
+}
+
+.inputContainer {
+  @include media-query(sm) {
+    align-self: stretch;
+  }
+  .input {
+    @include media-query(sm) {
+      align-self: stretch;
+      width: 100%;
+    }
+  }
+}
+
+.error {
+  background: #fecaca !important;
+  border-radius: 4px !important;
+  border: 1px solid #fecaca !important;
+  background: #fef2f2 !important;
+  color: #ef4444 !important;
+}
+.inputContainer {
+  position: relative;
+
+  &.adults {
+    flex: 1;
+  }
+
+  &.child {
+    flex: 1;
+  }
+
+  &.baby {
+    flex: 1;
+  }
+}
+.error__box {
+  position: absolute;
+  background: #f6fbff;
+  border-radius: 4px;
+  border: 1px dotted #ef4444;
+  color: #ef4444;
+  font-size: $fontSize;
+  font-weight: 400;
+  line-height: normal;
+  padding: 4px 8px;
+  max-width: 300px;
+  text-align: center;
+  left: 0;
+  bottom: calc(100%);
+  z-index: 1;
+  opacity: 0.85;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.error__box.hidden {
+  opacity: 0;
+  transform: translateY(0);
 }

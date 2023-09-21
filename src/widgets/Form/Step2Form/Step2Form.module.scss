@@ -51,7 +51,7 @@
         .title,
         .subtitle {
           color: $mainColor;
-          font-family: $fontFamily;
+
           font-weight: 700;
           line-height: normal;
           flex: 1 0 0;
@@ -117,7 +117,7 @@
 
             .page__form__text {
               color: $mainColor;
-              font-family: $fontFamily;
+
               font-size: 16px;
               font-weight: 400;
               line-height: normal;
@@ -154,7 +154,7 @@
             }
             .page__form__text {
               color: $mainColor;
-              font-family: $fontFamily;
+
               font-size: $fontSize;
               font-weight: 400;
               line-height: normal;
@@ -166,7 +166,7 @@
             }
             .sumnumber {
               color: $mainColor;
-              font-family: $fontFamily;
+
               font-size: $fontSize;
               font-weight: 600;
               line-height: normal;
@@ -204,7 +204,7 @@
         border-radius: 4px;
         background: $blueColor;
         color: $whiteColor;
-        font-family: $fontFamily;
+
         font-size: $fontSize;
         font-weight: 500;
         line-height: normal;
@@ -311,7 +311,7 @@
   border-radius: 4px;
   background: #fff;
   color: $blueColor;
-  font-family: $fontFamily;
+
   font-size: $fontSize;
   font-weight: 500;
   line-height: normal;

@@ -1,10 +1,10 @@
-// App.js
 import { useState } from "react"
 import { Step1, Step2, Step3, Submit } from "../pages"
+import { DATA, loadFormData } from "@/services/localStorageService"
 
 function App() {
   const [currentStep, setCurrentStep] = useState(1)
-  const [formData, setFormData] = useState()
+  const [formData, setFormData] = useState(loadFormData() || {})
 
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1)
@@ -15,7 +15,9 @@ function App() {
   }
 
   const handleFormChange = (fieldName, value) => {
-    setFormData({ ...formData, [fieldName]: value })
+    const updatedFormData = { ...formData, [fieldName]: value }
+    setFormData(updatedFormData)
+    localStorage.setItem(DATA, JSON.stringify(updatedFormData))
   }
 
   const handlePayment = () => {

@@ -1,36 +1,44 @@
-import { useState, useEffect } from "react" // Import React
+import { useState, useEffect, useCallback } from "react"
 import PropTypes from "prop-types"
-import { useSelector, useDispatch } from "react-redux"
-import { saveStep1FormData } from "@/redux/store/actions/actions" // Assuming this import is correct
-
-// Import LOCAL_STORAGE_KEY from the correct path
-import { LOCAL_STORAGE_KEY, loadFormData } from "@/services/localStorageService"
-
-// Import Step1Form from the correct path
+import { useDispatch } from "react-redux"
+import { saveStep1FormData } from "@/redux/store/actions/actions"
+import { DATA, loadFormData } from "@/services/localStorageService"
 import { Step1Form } from "@/widgets"
 
 const Step1 = ({ onNextStep }) => {
-  const formData = useSelector((state) => state.step1.formData)
+  const [formData, setFormData] = useState({
+    adults: "",
+    child: "",
+    baby: "",
+    roomType: "",
+    nights: "",
+    insurance: false,
+    total: "0 ₽",
+  })
+
   const dispatch = useDispatch()
   const [roomTypeOptions] = useState(["Эконом", "Стандарт", "Люкс"])
 
-  const handleFormChange = (fieldName, value) => {
-    const updatedFormData = { ...formData, [fieldName]: value }
-    dispatch(saveStep1FormData(updatedFormData))
-
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedFormData))
-  }
+  const handleFormChange = useCallback((fieldName, value) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [fieldName]: value,
+    }))
+  }, [])
 
   useEffect(() => {
     const savedFormData = loadFormData()
-    if (savedFormData) {
-      dispatch(saveStep1FormData(savedFormData))
+    if (savedFormData && savedFormData.step1) {
+      setFormData(savedFormData.step1)
     }
-  }, [dispatch])
+  }, [])
 
-  const handleNextStep = () => {
+  const handleNextStep = useCallback(() => {
+    dispatch(saveStep1FormData(formData))
+    localStorage.setItem(DATA, JSON.stringify(formData))
+
     onNextStep()
-  }
+  }, [dispatch, formData, onNextStep])
 
   return (
     <div>

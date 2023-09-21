@@ -6,7 +6,7 @@ const savedData = loadFormData();
 
 const store = configureStore({
     reducer: rootReducer,
-    preloadedState: savedData,
+    preloadedState: savedData, // Ensure savedData is correctly loaded from local storage
 });
 
 export default store;

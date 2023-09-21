@@ -1,4 +1,4 @@
-export const LOCAL_STORAGE_KEY = "formData";
+export const DATA = "formData";
 
 
 // STEP 1 FORM
@@ -8,7 +8,7 @@ export const saveStep1FormData = (formData) => {
         ...savedData,
         step1: formData,
     };
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedData));
+    localStorage.setItem(DATA, JSON.stringify(updatedData));
 };
 
 // STEP 2 FORM
@@ -18,11 +18,11 @@ export const saveStep2FormData = (formData) => {
         ...savedData,
         step2: formData,
     };
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedData));
+    localStorage.setItem(DATA, JSON.stringify(updatedData));
 };
 
 // FETCH ALL DATA
 export const loadFormData = () => {
-    const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const savedData = localStorage.getItem(DATA);
     return savedData ? JSON.parse(savedData) : undefined; // Return undefined if no data is found
 };
