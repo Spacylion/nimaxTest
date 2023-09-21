@@ -4,15 +4,7 @@ import { Step1, Step2, Step3, Submit } from "../pages"
 
 function App() {
   const [currentStep, setCurrentStep] = useState(1)
-  const [formData, setFormData] = useState({
-    adults: 1,
-    child: 0,
-    baby: 0,
-    nights: 0,
-    insurance: true,
-    roomType: "Эконом",
-    // Add more fields as needed
-  })
+  const [formData, setFormData] = useState()
 
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1)
@@ -27,20 +19,11 @@ function App() {
   }
 
   const handlePayment = () => {
-    setCurrentStep(4) // Go to the Submit page when "Оплатить" is clicked
+    setCurrentStep(4)
   }
 
   const handleBookAgain = () => {
-    setCurrentStep(1) // Go to Step1 when "Забронировать еще" is clicked
-    setFormData({
-      adults: 1,
-      child: 0,
-      baby: 0,
-      nights: 0,
-      insurance: true,
-      roomType: "Эконом",
-      // Reset other form fields as needed
-    })
+    setCurrentStep(1)
   }
 
   return (

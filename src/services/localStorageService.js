@@ -1,4 +1,5 @@
-const LOCAL_STORAGE_KEY = "formData";
+export const LOCAL_STORAGE_KEY = "formData";
+
 
 // STEP 1 FORM
 export const saveStep1FormData = (formData) => {
@@ -23,5 +24,5 @@ export const saveStep2FormData = (formData) => {
 // FETCH ALL DATA
 export const loadFormData = () => {
     const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
-    return savedData ? JSON.parse(savedData) : { step1: {}, step2: {} };
+    return savedData ? JSON.parse(savedData) : undefined; // Return undefined if no data is found
 };

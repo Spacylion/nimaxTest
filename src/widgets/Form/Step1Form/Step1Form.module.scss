@@ -146,6 +146,11 @@
               border: 1px solid $inputColor;
               background: $whiteColor;
 
+              .error {
+                border: 1px solid #fecaca;
+                color: #ef4444;
+              }
+
               @include media-query(sm) {
                 align-self: stretch;
               }
