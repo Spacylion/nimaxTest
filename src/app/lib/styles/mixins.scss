@@ -1,0 +1,78 @@
+// MIXINS
+@mixin media-query($breakpoint) {
+  @if $breakpoint == "sm" {
+    @media (max-width: #{$breakpoint-sm}) {
+      @content;
+    }
+  } @else if $breakpoint == "md" {
+    @media (min-width: #{$breakpoint-sm + 1}) and (max-width: #{$breakpoint-md}) {
+      @content;
+    }
+  } @else if $breakpoint == "lg" {
+    @media (min-width: #{$breakpoint-md + 1}) and (max-width: #{$breakpoint-lg}) {
+      @content;
+    }
+  }
+}
+
+@mixin button-base {
+  display: flex;
+  width: 128px;
+  height: 44px;
+  padding: 10px 14px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid $blueColor;
+  border-radius: 4px;
+  background: $blueColor;
+  color: $whiteColor;
+  font-family: $fontFamily;
+  font-size: $fontSize;
+  font-weight: 500;
+  line-height: normal;
+  position: relative;
+  transition: width 0.2s ease, height 0.2s ease;
+
+  &:hover {
+    background: $hoveredColor;
+    cursor: pointer;
+  }
+  &:focus {
+    border: 3px double $whiteColor;
+  }
+  &:disabled {
+    background: $disabledColor;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background: $secondaryColor;
+  color: $whiteColor;
+
+  &:hover {
+    background: $secondaryHoverColor;
+  }
+}
+
+@mixin button-success {
+  @include button-base;
+  background: $successColor;
+  color: $whiteColor;
+
+  &:hover {
+    background: $successHoverColor;
+  }
+}
+
+@mixin button-danger {
+  @include button-base;
+  background: $dangerColor;
+  color: $whiteColor;
+
+  &:hover {
+    background: $dangerHoverColor;
+  }
+}

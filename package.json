@@ -15,7 +15,9 @@
     "esbuild": "^0.19.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.1.2"
+    "react-redux": "^8.1.2",
+    "react-router-dom": "^6.16.0",
+    "redux": "^4.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
@@ -26,6 +28,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "node-sass": "^9.0.0",
+    "sass": "^1.68.0",
     "vite": "^4.4.9"
   }
 }

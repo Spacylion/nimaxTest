@@ -1,31 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @import "reset";
-// @import "variables";
-// @import "mixins";
+@import "variables";
+@import "mixins";
 
-// Breakpoints
+// BREAKPOINTS
 $breakpoint-sm: 320px;
 $breakpoint-md: 640px;
 $breakpoint-lg: 768px;
 
-// MIXINS
-@mixin media-query($breakpoint) {
-  @if $breakpoint == "sm" {
-    @media (max-width: #{$breakpoint-sm}) {
-      @content;
-    }
-  } @else if $breakpoint == "md" {
-    @media (min-width: #{$breakpoint-sm + 1}) and (max-width: #{$breakpoint-md}) {
-      @content;
-    }
-  } @else if $breakpoint == "lg" {
-    @media (min-width: #{$breakpoint-md + 1}) and (max-width: #{$breakpoint-lg}) {
-      @content;
-    }
-  }
-}
-
-// Colors
+// COLORS
 $mainColor: #000;
 $whiteColor: #fff;
 $blueColor: #3b82f6;
@@ -36,7 +19,7 @@ $arrowColor: #6b7280;
 $backColor: gray;
 $backgroundColor: #f9fafb;
 
-// Typography
+// TYPOGRAPHY
 $fontFamily: "Inter", sans-serif;
 $fontSize: 16px;
 
@@ -50,67 +33,4 @@ body {
   padding: 0;
   background-color: $backgroundColor;
   overflow-x: hidden;
-}
-
-@mixin button-base {
-  display: flex;
-  width: 128px;
-  height: 44px;
-  padding: 10px 14px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  border: 1px solid $blueColor;
-  border-radius: 4px;
-  background: $blueColor;
-  color: $whiteColor;
-  font-family: $fontFamily;
-  font-size: $fontSize;
-  font-weight: 500;
-  line-height: normal;
-  position: relative;
-  transition: width 0.2s ease, height 0.2s ease;
-
-  &:hover {
-    background: $hoveredColor;
-    cursor: pointer;
-  }
-  &:focus {
-    border: 3px double $whiteColor;
-  }
-  &:disabled {
-    background: $disabledColor;
-    cursor: not-allowed;
-  }
-}
-
-// Define additional button styles with different colors and borders
-@mixin button-secondary {
-  @include button-base;
-  background: $secondaryColor;
-  color: $whiteColor;
-
-  &:hover {
-    background: $secondaryHoverColor;
-  }
-}
-
-@mixin button-success {
-  @include button-base;
-  background: $successColor;
-  color: $whiteColor;
-
-  &:hover {
-    background: $successHoverColor;
-  }
-}
-
-@mixin button-danger {
-  @include button-base;
-  background: $dangerColor;
-  color: $whiteColor;
-
-  &:hover {
-    background: $dangerHoverColor;
-  }
 }

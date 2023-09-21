@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
-import styles from "./Step3.module.scss"
+import styles from "./Step3Form.module.scss"
 
-const Step3 = ({ onPrevStep, onPayment, formData }) => {
+const Step3Form = ({ formData, onPrevStep, onPayment }) => {
   const handlePrevStep = () => {
     onPrevStep()
   }
@@ -79,10 +79,10 @@ const Step3 = ({ onPrevStep, onPayment, formData }) => {
   )
 }
 
-Step3.propTypes = {
+Step3Form.propTypes = {
+  formData: PropTypes.object.isRequired,
   onPrevStep: PropTypes.func.isRequired,
   onPayment: PropTypes.func.isRequired,
-  formData: PropTypes.object.isRequired,
 }
 
-export default Step3
+export default Step3Form

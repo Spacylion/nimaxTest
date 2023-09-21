@@ -1,4 +1,4 @@
-@import "../app/lib/styles/global.scss";
+@import "@/app/lib/styles/global.scss";
 .page {
   display: flex;
   flex-direction: column;
@@ -105,7 +105,7 @@
 
           .bold__text {
             color: #000;
-            font-family: Inter;
+            font-family: $fontFamily;
             font-size: 16px;
             font-style: normal;
             font-weight: 600;
@@ -116,7 +116,7 @@
           }
           .text {
             color: #000;
-            font-family: Inter;
+            font-family: $fontFamily;
             font-size: 16px;
             font-style: normal;
             font-weight: 400;
@@ -291,7 +291,6 @@
   border: none;
   position: relative;
   color: #000;
-  font-family: Inter;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;

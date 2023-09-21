@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import styles from "./Step1Form.module.scss"
-import ToggleOn from "../../app/assets/images/ToggleOn.svg"
-import ToggleOff from "../../app/assets/images/ToggleOff.svg"
+import ToggleOn from "@/app/assets/images/ToggleOn.svg"
+import ToggleOff from "@/app/assets/images/ToggleOff.svg"
 
 const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
   return (

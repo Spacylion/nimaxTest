@@ -1,8 +1,14 @@
 import PropTypes from "prop-types"
-import styles from "./Submit.module.scss"
-import ConfirmTick from "../app/assets/images/ConfirmTick.svg"
+import styles from "./SubmitForm.module.scss"
+import ConfirmTick from "@/app/assets/images/ConfirmTick.svg"
 
-const Submit = ({ onReset }) => {
+const SubmitForm = ({ onReset }) => {
+  const handleReset = () => {
+    localStorage.removeItem("step1FormData")
+    localStorage.removeItem("step2FormData")
+    onReset()
+  }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.wrapper__frame}>
@@ -23,7 +29,7 @@ const Submit = ({ onReset }) => {
             </div>
             <div className={styles.submit__content__bottom}>
               <button
-                onClick={onReset}
+                onClick={handleReset}
                 className={styles.submit__content__bottom__button}
               >
                 Забронировать еще
@@ -36,8 +42,8 @@ const Submit = ({ onReset }) => {
   )
 }
 
-Submit.propTypes = {
+SubmitForm.propTypes = {
   onReset: PropTypes.func.isRequired,
 }
 
-export default Submit
+export default SubmitForm

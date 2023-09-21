@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
-import styles from "./Step2.module.scss"
+import styles from "./Step2Form.module.scss"
 
-const Step2 = ({ onNextStep, onPrevStep }) => {
+const Step2Form = ({ formData, onFormChange, onNextStep, onPrevStep }) => {
   const handleNextStep = () => {
     onNextStep()
   }
@@ -26,30 +26,37 @@ const Step2 = ({ onNextStep, onPrevStep }) => {
             {[
               {
                 label: "Фамилия",
-                type: "text",
+                fieldName: "lastName",
+                value: formData.lastName,
+                inputType: "text",
                 placeholder: "Иванов",
               },
               {
                 label: "Имя",
-                type: "text",
+                fieldName: "firstName",
+                value: formData.firstName,
+                inputType: "text",
                 placeholder: "Иван",
               },
               {
                 label: "Отчество",
-                type: "text",
+                fieldName: "middleName",
+                value: formData.middleName,
+                inputType: "text",
                 placeholder: "Иванович",
               },
               {
                 label: "Номер телефона",
-                type: "tel",
+                fieldName: "phoneNumber",
+                value: formData.phoneNumber,
+                inputType: "tel",
                 placeholder: "+7 999 123-4567",
               },
               {
                 label: "Дата рождения",
-                type: "date",
-                id: "date",
-                name: "date",
-                value: "2001-01-01",
+                fieldName: "birthDate",
+                value: formData.birthDate,
+                inputType: "date",
                 min: "1930-01-01",
                 max: "2005-01-01",
               },
@@ -61,25 +68,25 @@ const Step2 = ({ onNextStep, onPrevStep }) => {
                 <div className={styles.page__form__row__child__2}>
                   <input
                     className={styles.input}
-                    type={item.type}
+                    type={item.inputType}
                     placeholder={item.placeholder}
-                    {...(item.type === "date"
-                      ? { value: item.value, min: item.min, max: item.max }
+                    value={item.value}
+                    onChange={(e) =>
+                      onFormChange(item.fieldName, e.target.value)
+                    }
+                    {...(item.inputType === "date"
+                      ? { min: item.min, max: item.max }
                       : {})}
                   />
                 </div>
               </div>
             ))}
           </div>
-
           <div
             className={`${styles.page__main__step__wrapper__buttons} ${styles.mobile__btn}`}
           >
             <div className={styles.page__main__step__wrapper__button}>
-              <button
-                onClick={handlePrevStep}
-                className={`${styles.button__back}`}
-              >
+              <button onClick={handlePrevStep} className={styles.button__back}>
                 Назад к расчету стоимости
               </button>
             </div>
@@ -95,9 +102,11 @@ const Step2 = ({ onNextStep, onPrevStep }) => {
   )
 }
 
-Step2.propTypes = {
+Step2Form.propTypes = {
+  formData: PropTypes.object.isRequired,
+  onFormChange: PropTypes.func.isRequired,
   onNextStep: PropTypes.func.isRequired,
-  onPrevStep: PropTypes.func.isRequired,
+  onPrevStep: PropTypes.func.isRequired, // Added onPrevStep prop
 }
 
-export default Step2
+export default Step2Form
