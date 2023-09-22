@@ -1,5 +1,5 @@
 import React from "react"
-import ReactDOM from "react-dom" // Updated import
+import { createRoot } from "react-dom" // Updated import
 import App from "@/app/App"
 import "@/app/lib/styles/global.scss"
 import { Provider } from "react-redux"
@@ -13,13 +13,13 @@ const store = createStore(rootReducer)
 
 // Use createRoot from react-dom
 const root = document.getElementById("root")
-const reactRoot = ReactDOM.createRoot(root)
+const reactRoot = createRoot(root)
 
 // Render your app inside the Provider
 reactRoot.render(
-  <Provider store={store}>
-    <React.StrictMode>
+  <React.StrictMode>
+    <Provider store={store}>
       <App />
-    </React.StrictMode>
-  </Provider>
+    </Provider>
+  </React.StrictMode>
 )
