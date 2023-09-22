@@ -10,6 +10,7 @@ const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
   const calculateTotalPrice = useCallback(() => {
     const roomTypePrices = { Эконом: 1800, Стандарт: 2800, Люкс: 4000 }
     const basePrice = roomTypePrices[localFormData.roomType] || 0
+
     return Number(
       (basePrice * localFormData.nights +
         (localFormData.child || 0) * (basePrice * 0.5) +
@@ -67,7 +68,6 @@ const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
   }
 
   useEffect(() => {
-    // Update the total cost within the formData object
     const updatedFormData = {
       ...localFormData,
       total: `${totalPrice} ₽`,
@@ -381,10 +381,10 @@ const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
 }
 
 Step1Form.propTypes = {
-  formData: PropTypes.object.isRequired,
+  formData: PropTypes.object.isRequired, // Ensure formData is required and of the correct type
   onFormChange: PropTypes.func.isRequired,
   onNextStep: PropTypes.func.isRequired,
-  roomTypeOptions: PropTypes.array.isRequired,
+  roomTypeOptions: PropTypes.array.isRequired, // Add PropTypes for roomTypeOptions
 }
 
 export default Step1Form

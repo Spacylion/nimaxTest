@@ -1,15 +1,42 @@
 import PropTypes from "prop-types"
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { saveStep2FormData } from "@/redux/store/actions/actions"
+import { saveFormData } from "@/redux/actions/formActions"
 import { Step2Form } from "@/widgets"
 
 const Step2 = ({ onNextStep, onPrevStep }) => {
   const dispatch = useDispatch()
-  const formData = useSelector((state) => state.step2.formData)
+  const formData = useSelector((state) => state.formData || {}) // Initialize with an empty object if undefined
+  const [errors, setErrors] = useState({})
 
   const handleNextStep = () => {
-    onNextStep()
+    // Perform validation here and update the 'errors' state
+    const validationErrors = {}
+
+    if (!formData.lastName?.trim()) {
+      validationErrors.lastName = "Введите фамилию"
+    }
+
+    if (!formData.firstName?.trim()) {
+      validationErrors.firstName = "Введите имя"
+    }
+
+    if (
+      !/^\+7\s\d{3}\s\d{3}-\d{4}$/.test(formData.phoneNumber) ||
+      formData.phoneNumber.length !== 15
+    ) {
+      validationErrors.phoneNumber = "Введите корректный номер телефона"
+    }
+
+    if (!formData.birthDate) {
+      validationErrors.birthDate = "Введите дату рождения"
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+    } else {
+      onNextStep()
+    }
   }
 
   const handlePrevStep = () => {
@@ -18,35 +45,28 @@ const Step2 = ({ onNextStep, onPrevStep }) => {
 
   const handleFormChange = (fieldName, value) => {
     const updatedFormData = { ...formData, [fieldName]: value }
-    dispatch(saveStep2FormData(updatedFormData))
-
-    localStorage.setItem("step2FormData", JSON.stringify(updatedFormData))
+    dispatch(saveFormData(updatedFormData))
   }
 
   useEffect(() => {
-    const saveFormDataToLocalStorage = (formData) => {
-      localStorage.setItem("step2FormData", JSON.stringify(formData))
-    }
-
-    const loadFormDataFromLocalStorage = () => {
-      const savedFormData = localStorage.getItem("step2FormData") || "{}"
-      const parsedData = JSON.parse(savedFormData)
-      return parsedData
-    }
-    const formDataFromLocalStorage = loadFormDataFromLocalStorage()
-
-    dispatch(saveStep2FormData(formDataFromLocalStorage))
-
-    saveFormDataToLocalStorage(formDataFromLocalStorage)
+    // You can load the initial form data from Redux here if needed
+    // const initialFormData = { ... };
+    // dispatch(saveFormData(initialFormData));
   }, [dispatch])
+
+  useEffect(() => {
+    // You can save the form data to Redux here if needed
+    // dispatch(saveFormData(formData));
+  }, [formData])
 
   return (
     <div>
       <Step2Form
         formData={formData}
-        onFormChange={(fieldName, value) => handleFormChange(fieldName, value)}
+        onFormChange={handleFormChange}
         onNextStep={handleNextStep}
         onPrevStep={handlePrevStep}
+        errors={errors} // Pass the 'errors' state to Step2Form
       />
     </div>
   )

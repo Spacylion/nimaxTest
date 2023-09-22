@@ -1,44 +1,36 @@
-import { useState, useEffect, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import PropTypes from "prop-types"
-import { useDispatch } from "react-redux"
-import { saveStep1FormData } from "@/redux/store/actions/actions"
-import { DATA, loadFormData } from "@/services/localStorageService"
+import { useDispatch, useSelector } from "react-redux"
+import { saveFormData } from "@/redux/actions/formActions"
+import {
+  loadFormData,
+  saveFormData as saveLocalStorageFormData,
+} from "@/services/localStorageService"
 import { Step1Form } from "@/widgets"
 
 const Step1 = ({ onNextStep }) => {
-  const [formData, setFormData] = useState({
-    adults: "",
-    child: "",
-    baby: "",
-    roomType: "",
-    nights: "",
-    insurance: false,
-    total: "0 ₽",
-  })
-
   const dispatch = useDispatch()
   const [roomTypeOptions] = useState(["Эконом", "Стандарт", "Люкс"])
-
-  const handleFormChange = useCallback((fieldName, value) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [fieldName]: value,
-    }))
-  }, [])
+  const formDataRedux = useSelector((state) => state.formData)
 
   useEffect(() => {
-    const savedFormData = loadFormData()
-    if (savedFormData && savedFormData.step1) {
-      setFormData(savedFormData.step1)
+    const savedFormData = loadFormData("formData") // Change the key to "formData"
+    if (savedFormData) {
+      dispatch(saveFormData(savedFormData))
     }
-  }, [])
+  }, [dispatch])
+
+  const [formData, setFormData] = useState(formDataRedux)
+  const handleFormChange = (fieldName, value) => {
+    const updatedFormData = { ...formData, [fieldName]: value }
+    setFormData(updatedFormData)
+    saveFormData("formData", updatedFormData) // Change the key to "formData"
+    saveLocalStorageFormData("formData", updatedFormData) // Change the key to "formData" for local storage
+  }
 
   const handleNextStep = useCallback(() => {
-    dispatch(saveStep1FormData(formData))
-    localStorage.setItem(DATA, JSON.stringify(formData))
-
     onNextStep()
-  }, [dispatch, formData, onNextStep])
+  }, [onNextStep])
 
   return (
     <div>
