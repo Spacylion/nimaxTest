@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect, useCallback } from "react"
 import PropTypes from "prop-types"
 import styles from "./Step1Form.module.scss"
 import ToggleOn from "@/app/assets/images/ToggleOn.svg"
@@ -6,121 +6,126 @@ import ToggleOff from "@/app/assets/images/ToggleOff.svg"
 
 const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
   const [localFormData, setLocalFormData] = useState(formData)
+
+  const calculateTotalPrice = useCallback(() => {
+    const roomTypePrices = { Эконом: 1800, Стандарт: 2800, Люкс: 4000 }
+    const basePrice = roomTypePrices[localFormData.roomType] || 0
+    return Number(
+      (basePrice * localFormData.nights +
+        (localFormData.child || 0) * (basePrice * 0.5) +
+        (localFormData.baby || 0) * basePrice) *
+        (1 + localFormData.insurance * 0.1) *
+        localFormData.adults
+    )
+  }, [localFormData])
+  const [totalPrice, setTotalPrice] = useState(calculateTotalPrice())
   const [errors, setErrors] = useState({})
-  const [errorMessages, setErrorMessages] = useState({})
+  const fieldErrors = {}
 
-  const calculateTotalPrice = ({
-    adults,
-    child,
-    baby,
-    roomType,
-    nights,
-    insurance,
-  }) => {
-    const roomTypePrices = {
-      Эконом: 1800,
-      Стандарт: 2800,
-      Люкс: 4000,
+  const validateField = (fieldName, fieldValue) => {
+    switch (fieldName) {
+      case "adults":
+        if (fieldValue < 1)
+          fieldErrors.adults = "Количество взрослых должно быть больше 0"
+        break
+      case "baby":
+        if (fieldValue < 0)
+          fieldErrors.baby =
+            "Количество детей до 5 лет не может быть отрицательным"
+        break
+      case "child":
+        if (fieldValue < 0)
+          fieldErrors.child =
+            "Количество детей от 5 до 12 лет не может быть отрицательным"
+        break
+      case "nights":
+        if (fieldValue < 1)
+          fieldErrors.nights = "Количество ночей (числовое, мин.знач.: 1)"
+        if (fieldValue < 0)
+          fieldErrors.nights = "Количество ночей не может быть отрицательным"
+        break
+      default:
+        break
     }
-
-    const basePrice = roomTypePrices[roomType] || 0
-    const totalPrice =
-      (basePrice * nights +
-        (child || 0) * (basePrice * 0.5) +
-        (baby || 0) * basePrice) *
-      (1 + insurance * 0.1) *
-      adults
-
-    return totalPrice.toFixed(0) + " ₽"
-  }
-
-  const validateField = (fieldName, formData) => {
-    const fieldErrors = {}
-
-    if (fieldName === "adults" && formData.adults < 1) {
-      fieldErrors.adults = "Количество взрослых должно быть больше 0"
-    }
-    if (fieldName === "baby" && formData.baby < 0) {
-      fieldErrors.baby = "Количество детей до 5 лет не может быть отрицательным"
-    }
-    if (fieldName === "child" && formData.child < 0) {
-      fieldErrors.child =
-        "Количество детей от 5 до 12 лет не может быть отрицательным"
-    }
-    if (fieldName === "nights" && formData.nights < 1) {
-      fieldErrors.nights = "Количество ночей (числовое, мин.знач.: 1)"
-    }
-    if (fieldName === "nights" && formData.nights < 0) {
-      fieldErrors.nights = "Количество ночей не может быть отрицательным"
-    }
-
     return fieldErrors
   }
 
-  const isNextStepBlocked =
-    Object.keys(errors).length === 0 &&
-    localFormData.adults > 0 &&
-    (localFormData.child >= 0 || localFormData.child === "") &&
-    (parseInt(localFormData.baby, 10) >= 0 || localFormData.baby === "") &&
-    localFormData.nights >= 1 &&
-    localFormData.roomType !== "" &&
-    (localFormData.insurance === true ||
-      localFormData.insurance === false ||
-      localFormData.insurance === "true" ||
-      localFormData.insurance === "false")
-
-  const totalPrice = useMemo(
-    () => calculateTotalPrice(localFormData),
-    [localFormData]
-  )
-
-  useEffect(() => {
-    onFormChange("total", totalPrice) // Update the total in the parent component
-  }, [totalPrice, onFormChange])
-
-  useEffect(() => {
-    onFormChange("total", localFormData.total)
-  }, [localFormData.total, onFormChange])
-
-  useEffect(() => {
-    const maxBabyValue = localFormData.adults * 3
-    const babyInput = document.getElementById("baby-input")
-    if (babyInput) {
-      babyInput.max = maxBabyValue.toString()
-    }
-  }, [localFormData.adults])
-
-  const handleFormChange = (fieldName, value) => {
-    let updatedValue = value
-    if (fieldName === "insurance") {
-      updatedValue = !localFormData.insurance
-    }
-    setLocalFormData((prevLocalFormData) => ({
-      ...prevLocalFormData,
-      [fieldName]: updatedValue,
-    }))
+  const errorMessages = {
+    adults: "Количество взрослых должно быть больше 0",
+    child: "Количество детей от 5 до 12 лет не может быть отрицательным",
+    baby: "Количество детей до 5 лет не может быть отрицательным",
+    nights: "Количество ночей (числовое, мин.знач.: 1)",
   }
 
-  const handleBlur = (fieldName, value) => {
+  const isButtonDisabled = () => {
+    return (
+      localFormData.adults <= 0 ||
+      localFormData.nights < 1 ||
+      localFormData.roomType === "" ||
+      (localFormData.insurance !== true && localFormData.insurance !== false)
+    )
+  }
+
+  useEffect(() => {
+    // Update the total cost within the formData object
     const updatedFormData = {
       ...localFormData,
-      [fieldName]: value,
+      total: `${totalPrice} ₽`,
     }
+
+    onFormChange("total", `${totalPrice} ₽`)
 
     try {
       localStorage.setItem("formData", JSON.stringify(updatedFormData))
     } catch (error) {
-      // Handle the error
+      console.error("Error storing data in localStorage:", error)
+    }
+  }, [totalPrice])
+
+  useEffect(() => {
+    setTotalPrice(calculateTotalPrice())
+  }, [
+    localFormData.roomType,
+    localFormData.nights,
+    localFormData.child,
+    localFormData.baby,
+    localFormData.insurance,
+    localFormData.adults,
+    calculateTotalPrice,
+  ])
+
+  const handleFormChange = (fieldName, value) => {
+    const updatedValue =
+      fieldName === "insurance" ? !localFormData.insurance : value
+    const updatedFormData = {
+      ...localFormData,
+      [fieldName]:
+        updatedValue !== undefined ? updatedValue : localFormData[fieldName],
+    }
+    setLocalFormData(updatedFormData)
+    try {
+      localStorage.setItem("formData", JSON.stringify(updatedFormData))
+    } catch (error) {
+      console.error("Error storing data in localStorage:", error)
     }
   }
 
-  useEffect(() => {
-    const storedFormData = localStorage.getItem("formData")
-    if (storedFormData) {
-      const parsedFormData = JSON.parse(storedFormData)
-      setLocalFormData(parsedFormData)
+  const handleBlur = (fieldName, value) => {
+    const fieldErrors = validateField(fieldName, value)
+
+    if (Object.keys(fieldErrors).length === 0) {
+      const updatedErrors = { ...errors }
+      delete updatedErrors[fieldName]
+      setErrors(updatedErrors)
+    } else {
+      setErrors({ ...errors, ...fieldErrors })
+      setTimeout(() => {
+        const updatedErrors = { ...errors }
+        delete updatedErrors[fieldName]
+        setErrors(updatedErrors)
+      }, 3000)
     }
-  }, [])
+  }
 
   return (
     <div className={styles.page}>
@@ -152,11 +157,9 @@ const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
                     onBlur={() => handleBlur("adults", localFormData.adults)}
                     id='adults-input'
                   />
-                  {errorMessages.adults && (
+                  {errors.adults && (
                     <div
-                      className={`${styles.error__box} ${
-                        errorMessages.adults ? "visible" : ""
-                      }`}
+                      className={`${styles.error__box} ${styles.customError}`}
                     >
                       {errorMessages.adults}
                     </div>
@@ -183,11 +186,10 @@ const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
                     onBlur={() => handleBlur("child", localFormData.child)}
                     id='child-input'
                   />
-                  {errorMessages.child && (
+
+                  {errors.child && (
                     <div
-                      className={`${styles.error__box} ${
-                        errorMessages.child ? "visible" : ""
-                      }`}
+                      className={`${styles.error__box} ${styles.customError}`}
                     >
                       {errorMessages.child}
                     </div>
@@ -215,11 +217,10 @@ const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
                     id='baby-input'
                     max={localFormData.adults * 3}
                   />
-                  {errorMessages.baby && (
+
+                  {errors.baby && (
                     <div
-                      className={`${styles.error__box} ${
-                        errorMessages.baby ? "visible" : ""
-                      }`}
+                      className={`${styles.error__box} ${styles.customError}`}
                     >
                       {errorMessages.baby}
                     </div>
@@ -257,9 +258,8 @@ const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
                           type='radio'
                           value={option}
                           checked={localFormData.roomType === option}
-                          onChange={(e) =>
-                            handleFormChange("roomType", e.target.value)
-                          }
+                          onChange={(e) => handleFormChange("roomType", option)}
+                          id='roomType-select'
                         />
                         {option}
                       </label>
@@ -268,6 +268,7 @@ const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
                 )}
               </div>
             </div>
+
             {[
               {
                 label: "Количество ночей",
@@ -292,6 +293,7 @@ const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
                             )
                           }
                           className={styles.toggleIcon}
+                          id='nights-input'
                         />
                         <span className={styles.page__form__text}>
                           Страховка
@@ -302,6 +304,7 @@ const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
                         type='checkbox'
                         className={styles.checkbox}
                         checked={localFormData.insurance}
+                        id='nights-input'
                         onChange={() =>
                           handleFormChange(
                             "insurance",
@@ -322,27 +325,29 @@ const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
                   {field.render ? (
                     field.render()
                   ) : (
-                    <input
-                      className={`${styles.input} ${
-                        errors[field.name] ? styles.error : ""
-                      }`}
-                      type='number'
-                      placeholder={field.placeholder}
-                      value={localFormData[field.name]}
-                      onChange={(e) =>
-                        handleFormChange(field.name, e.target.value)
-                      }
-                      onBlur={() =>
-                        handleBlur(field.name, localFormData[field.name])
-                      }
-                    />
-                  )}
-                  {errorMessages[field.name] && (
-                    <div
-                      className={`${styles.error__box} ${styles.customError}`}
-                    >
-                      {errorMessages[field.name]}
-                    </div>
+                    <>
+                      <input
+                        className={`${styles.input} ${
+                          errors[field.name] ? styles.error : ""
+                        }`}
+                        type='number'
+                        placeholder={field.placeholder}
+                        value={localFormData[field.name]}
+                        onChange={(e) =>
+                          handleFormChange(field.name, e.target.value)
+                        }
+                        onBlur={() =>
+                          handleBlur(field.name, localFormData[field.name])
+                        }
+                      />
+                      {errors[field.name] && (
+                        <div
+                          className={`${styles.error__box} ${styles.customError}`}
+                        >
+                          {errorMessages[field.name]}
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
@@ -352,7 +357,7 @@ const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
                 <p className={styles.page__form__text}>Итого:</p>
               </div>
               <div className={styles.page__form__row__child__2}>
-                <p className={styles.page__form__text}>{localFormData.total}</p>
+                <p className={styles.page__form__text}>{totalPrice}</p>
               </div>
             </div>
           </div>
@@ -363,7 +368,7 @@ const Step1Form = ({ formData, onFormChange, onNextStep, roomTypeOptions }) => {
               <button
                 onClick={onNextStep}
                 className={styles.button}
-                disabled={!isNextStepBlocked}
+                disabled={isButtonDisabled()}
               >
                 Далее
               </button>
