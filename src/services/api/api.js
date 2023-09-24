@@ -1,4 +1,3 @@
-// api.js
 export const simulatePayment = async (formData) => {
     try {
         const response = await fetch('https://jsonplaceholder.typicode.com/posts', {

@@ -10,7 +10,6 @@ const Step2Form = ({ formData, onNextStep, onPrevStep }) => {
     JSON.parse(localStorage.getItem("formData")) || formData
   )
 
-  // Function to validate a field
   const validateField = (fieldName, fieldValue) => {
     const fieldErrors = {}
 
@@ -58,7 +57,6 @@ const Step2Form = ({ formData, onNextStep, onPrevStep }) => {
     return fieldErrors
   }
 
-  // Function to handle form change
   const handleFormChange = (fieldName, value) => {
     const updatedValue =
       fieldName === "insurance" ? !localFormData.insurance : value
@@ -74,7 +72,6 @@ const Step2Form = ({ formData, onNextStep, onPrevStep }) => {
       console.error("Error storing data in localStorage:", error)
     }
 
-    // Clear the error for the field when it's changed
     const updatedErrors = { ...errors }
     delete updatedErrors[fieldName]
     setErrors(updatedErrors)
