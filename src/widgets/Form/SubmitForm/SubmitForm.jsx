@@ -4,8 +4,6 @@ import ConfirmTick from "@/app/assets/images/ConfirmTick.svg"
 
 const SubmitForm = ({ onReset }) => {
   const handleReset = () => {
-    localStorage.removeItem("step1FormData")
-    localStorage.removeItem("step2FormData")
     onReset()
   }
 

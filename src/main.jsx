@@ -3,10 +3,12 @@ import { createRoot } from "react-dom"
 import App from "@/app/App"
 import "@/app/lib/styles/global.scss"
 import { Provider } from "react-redux"
-import { createStore } from "redux"
-import rootReducer from "@/redux/reducers/rootReducer" // Correct the import path
+import { configureStore } from "@reduxjs/toolkit"
+import rootReducer from "@/redux/reducers/rootReducer"
 
-const store = createStore(rootReducer)
+const store = configureStore({
+  reducer: rootReducer,
+})
 
 const root = document.getElementById("root")
 const reactRoot = createRoot(root)

@@ -99,6 +99,20 @@
             font-style: normal;
             font-weight: 500;
             line-height: normal;
+            font-size: $fontSize;
+            font-weight: 500;
+            line-height: normal;
+            border: none;
+            position: relative;
+            transition: width 0.2s ease, height 0.2s ease;
+
+            &:hover {
+              background: $hoveredColor;
+              cursor: pointer;
+            }
+            &:focus {
+              border: 3px double $whiteColor;
+            }
           }
         }
       }

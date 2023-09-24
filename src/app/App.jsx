@@ -6,10 +6,10 @@ function App() {
   const [currentStep, setCurrentStep] = useState(1)
   const [formDataStep1, setFormDataStep1] = useState(
     loadFormData("step1") || {}
-  ) // Load step1 data
+  )
   const [formDataStep2, setFormDataStep2] = useState(
     loadFormData("step2") || {}
-  ) // Load step2 data
+  )
 
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1)
@@ -22,13 +22,13 @@ function App() {
   const handleFormChangeStep1 = (fieldName, value) => {
     const updatedFormData = { ...formDataStep1, [fieldName]: value }
     setFormDataStep1(updatedFormData)
-    saveFormData("step1", updatedFormData) // Save step1 data
+    saveFormData("step1", updatedFormData)
   }
 
   const handleFormChangeStep2 = (fieldName, value) => {
     const updatedFormData = { ...formDataStep2, [fieldName]: value }
     setFormDataStep2(updatedFormData)
-    saveFormData("step2", updatedFormData) // Save step2 data
+    saveFormData("step2", updatedFormData)
   }
 
   const handlePayment = () => {
@@ -45,7 +45,7 @@ function App() {
         <Step1
           onNextStep={handleNextStep}
           formData={formDataStep1}
-          onFormChange={handleFormChangeStep1} // Use the appropriate handler
+          onFormChange={handleFormChangeStep1}
         />
       )}
       {currentStep === 2 && (
@@ -53,14 +53,14 @@ function App() {
           onPrevStep={handlePrevStep}
           onNextStep={handleNextStep}
           formData={formDataStep2}
-          onFormChange={handleFormChangeStep2} // Use the appropriate handler
+          onFormChange={handleFormChangeStep2}
         />
       )}
       {currentStep === 3 && (
         <Step3
           onPrevStep={handlePrevStep}
           onPayment={handlePayment}
-          formData={formDataStep1} // You can pass either formDataStep1 or formDataStep2 here as needed
+          formData={formDataStep1}
         />
       )}
       {currentStep === 4 && <Submit onReset={handleBookAgain} />}

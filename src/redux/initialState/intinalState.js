@@ -1,10 +1,10 @@
 const combinedInitialState = {
     formData: {
-        adults: 1,
-        child: 0,
-        baby: 0,
+        adults: "",
+        child: "",
+        baby: "",
         roomType: "",
-        nights: 1,
+        nights: "",
         insurance: false,
         total: "0 ₽",
         lastName: "",

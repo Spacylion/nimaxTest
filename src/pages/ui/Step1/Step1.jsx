@@ -14,7 +14,7 @@ const Step1 = ({ onNextStep }) => {
   const formDataRedux = useSelector((state) => state.formData)
 
   useEffect(() => {
-    const savedFormData = loadFormData("formData") // Change the key to "formData"
+    const savedFormData = loadFormData("formData")
     if (savedFormData) {
       dispatch(saveFormData(savedFormData))
     }
@@ -24,8 +24,8 @@ const Step1 = ({ onNextStep }) => {
   const handleFormChange = (fieldName, value) => {
     const updatedFormData = { ...formData, [fieldName]: value }
     setFormData(updatedFormData)
-    saveFormData("formData", updatedFormData) // Change the key to "formData"
-    saveLocalStorageFormData("formData", updatedFormData) // Change the key to "formData" for local storage
+    saveFormData("formData", updatedFormData)
+    saveLocalStorageFormData("formData", updatedFormData)
   }
 
   const handleNextStep = useCallback(() => {
